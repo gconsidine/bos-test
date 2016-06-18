@@ -1,18 +1,37 @@
 {
-  "name": "bos-utility",
+  "name": "bos-test",
   "version": "0.0.1",
-  "description": "A collection of utilities to facilitate testing BlueOak Server projects",
+  "description": "A collection of utilities to help test BlueOak Server projects",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gconsidine/bos-test.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "BlueOak"
+    "BlueOakJS",
+    "BlueOak",
+    "bos",
+    "test"
   ],
   "author": "greg considine <greg@greg-considine.com>",
   "license": "MIT",
   "dependencies": {
-    "blueoak-server": "^2.2.5",
+    "bluebird": "^3.4.1",
+    "blueoak-server": "^2.2.7",
+    "callsite": "^1.0.0",
+    "lodash": "^4.13.1",
+    "rewire": "^2.5.1",
+    "sinon": "^1.17.4",
     "strip-json-comments": "^2.0.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.1",
+    "jshint": "^2.9.2"
   }
 }

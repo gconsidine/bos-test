@@ -1,0 +1,26 @@
+{
+	"preset": "crockford",
+    "validateIndentation": 4,
+	"requireBlocksOnNewline": null,
+	"requireMultipleVarDecl": null,
+	"requireVarDeclFirst": null,
+	"disallowDanglingUnderscores": null,
+	"requireSpacesInAnonymousFunctionExpression": {
+	    "beforeOpeningCurlyBrace": true
+	},
+	"requireSpaceAfterKeywords": [
+		"do",
+		"for",
+		"if",
+		"else",
+		"switch",
+		"case",
+		"try",
+		"catch",
+		"void",
+		"while",
+		"with",
+		"return",
+		"typeof"
+	]
+}
