@@ -1,0 +1,18 @@
+{
+  "name": "bos-utility",
+  "version": "0.0.1",
+  "description": "A collection of utilities to facilitate testing BlueOak Server projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "BlueOak"
+  ],
+  "author": "greg considine <greg@greg-considine.com>",
+  "license": "MIT",
+  "dependencies": {
+    "blueoak-server": "^2.2.5",
+    "strip-json-comments": "^2.0.1"
+  }
+}
