@@ -1,3 +1,5 @@
+/* jshint expr:true */
+
 var bot = require('../../index'),
     expect = bot.expect;
 
@@ -38,7 +40,7 @@ describe('lib | inject', function () {
         var botConfig = { exclude: ['logger'] };
 
         injectNativeServices(botConfig).then(function () {
-            expect.toFail(); 
+            expect.toFail();
             done();
         })
         .catch(function (error) {

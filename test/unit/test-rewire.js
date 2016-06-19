@@ -1,3 +1,5 @@
+/* jshint expr:true */
+
 var bot = require('../../index'),
     expect = bot.expect;
 
@@ -5,14 +7,14 @@ describe('lib | rewire', function () {
 
     it('Should require a module given a relative path', function () {
         var example = bot.expose('../data/example');
-        expect(example.sum).to.be.a.function; 
+        expect(example.sum).to.be.a.function;
     });
 
     it('Should access a non-exported property', function () {
         var example = bot.expose('../data/example');
         var privateStuff = bot.get(example, 'privateStuff');
 
-        expect(privateStuff).to.be.an.object; 
+        expect(privateStuff).to.be.an.object;
     });
 
     it('Should access non-exported deeply nested property with string dot syntax', function () {

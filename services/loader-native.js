@@ -1,7 +1,7 @@
 var services;
 
-function init(_auth_, _cache_, _config_, _express_, _logger_, _middleware_, 
-              _monitor_, _postMiddleware_, _redis_, _stats_, _swagger_, 
+function init(_auth_, _cache_, _config_, _express_, _logger_, _middleware_,
+              _monitor_, _postMiddleware_, _redis_, _stats_, _swagger_,
               _system_, callback) {
 
     services = function () {
@@ -24,11 +24,11 @@ function init(_auth_, _cache_, _config_, _express_, _logger_, _middleware_,
     callback();
 }
 
-function all () {
+function all() {
     return services();
 }
 
-function get (name) {
+function get(name) {
     return services()[name];
 }
 

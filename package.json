@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp lint && gulp test && gulp test-with-coverage"
   },
   "keywords": [
     "BlueOakJS",
@@ -25,13 +25,18 @@
     "lodash": "^4.13.1",
     "rewire": "^2.5.1",
     "sinon": "^1.17.4",
+    "chai": "^3.5.0",
     "strip-json-comments": "^2.0.1"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
     "gulp": "^3.9.1",
     "gulp-jscs": "^3.0.2",
     "gulp-jshint": "^2.0.1",
-    "jshint": "^2.9.2"
+    "gulp-mocha": "^2.2.0",
+    "istanbul": "^0.4.3",
+    "jshint": "^2.9.2",
+    "mocha": "^2.5.3",
+    "mocha-lcov-reporter": "^1.2.0"
   }
 }
