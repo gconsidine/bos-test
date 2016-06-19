@@ -24,16 +24,11 @@ function init(_auth_, _cache_, _config_, _express_, _logger_, _middleware_,
     callback();
 }
 
-function all() {
+function getDependencies() {
     return services();
-}
-
-function get(name) {
-    return services()[name];
 }
 
 module.exports = {
     init: init,
-    all: all,
-    get: get
+    getDependencies: getDependencies
 };
