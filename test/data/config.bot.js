@@ -1,9 +1,9 @@
-module.exports: {
+module.exports = {
   includeByPath: ['../../services'],
   excludeByName: ['name-of-a-service'],
-  applyConfigs: ['./low.json', 'mid.json', 'top.json'],
+  configs: ['./low.json', 'mid.json', 'top.json'],
   stubAll: false,
-  stubSpecific: {
+  stub: {
     serviceOne: false,
     serviceTwo: true,
     serviceThree: {

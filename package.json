@@ -22,10 +22,10 @@
     "bluebird": "^3.4.1",
     "blueoak-server": "^2.2.7",
     "callsite": "^1.0.0",
+    "chai": "^3.5.0",
     "lodash": "^4.13.1",
     "rewire": "^2.5.1",
     "sinon": "^1.17.4",
-    "chai": "^3.5.0",
     "strip-json-comments": "^2.0.1"
   },
   "devDependencies": {

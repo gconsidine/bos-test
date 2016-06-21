@@ -1,0 +1,7 @@
+{
+  "logger": {
+    "colors": {    
+      "silly": "pink"
+    }
+  }
+}

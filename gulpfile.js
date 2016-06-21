@@ -43,8 +43,8 @@ gulp.task('test-with-coverage', function (done) {
     });
 });
 
-gulp.task('watch', function () {
-    gulp.watch(source, ['lint']);
+gulp.task('watch', ['lint', 'test'], function () {
+    gulp.watch(source, ['lint', 'test']);
 });
 
 gulp.task('lint', ['jshint', 'jscs']);
