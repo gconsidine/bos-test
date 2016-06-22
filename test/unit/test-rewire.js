@@ -24,7 +24,7 @@ describe('lib | rewire', function () {
         expect(value).to.equal('here');
     });
 
-    it('Should set a value of a priate property', function () {
+    it('Should set a value of a private property', function () {
         var example = bot.expose('../data/example');
 
         var replacement = 'there';

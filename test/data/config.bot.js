@@ -2,6 +2,7 @@ module.exports = {
   includeByPath: ['../../services'],
   excludeByName: ['name-of-a-service'],
   configs: ['./low.json', 'mid.json', 'top.json'],
+  logging: false,
   stubAll: false,
   stub: {
     serviceOne: false,

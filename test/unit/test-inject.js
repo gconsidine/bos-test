@@ -34,6 +34,14 @@ describe('lib | inject', function () {
         .catch(done);
     });
 
+    it('Should return unaltered configuration if it\'s already defined', function () {
+        var prep = bot.get(inject, 'prep');
+
+        var cBot = { defined: true };
+
+        expect(prep(cBot)).to.equal(cBot);
+    });
+
     it('Should reject invalid service exclusions', function (done) {
         var injectNativeServices = bot.get(inject, 'injectNativeServices');
 
@@ -82,6 +90,24 @@ describe('lib | inject', function () {
             done();
         })
         .catch(done);
+    });
+
+    it('Should reject with an error on failure to load config', function (done) {
+        bot.get(inject, 'prep')();
+
+        var injectConfig = bot.get(inject, 'injectConfig');
+        var serviceLoader = bot.get(inject, 'serviceLoader');
+
+        serviceLoader.init = function (arr, callback) {
+            return callback(new Error('I\'m ded.'));
+        };
+
+        bot.set(inject, 'serviceLoader', serviceLoader);
+
+        injectConfig().then(done).catch(function (error) {
+            expect(error.toString()).to.equal('Error: I\'m ded.');
+            done();
+        });
     });
 });
 
