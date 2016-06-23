@@ -1,7 +1,7 @@
 module.exports = {
   includeByPath: ['../../services'],
   excludeByName: ['name-of-a-service'],
-  configs: ['./low.json', 'mid.json', 'top.json'],
+  configs: ['./config.one.json', './config.two.json'],
   logging: false,
   stubAll: false,
   stub: {

@@ -71,7 +71,7 @@ describe('lib | inject', function () {
     it('Should override default config values when a valid config path is supplied', function (done) {
         var injectConfig = bot.get(inject, 'injectConfig');
 
-        var cBot = { configs: ['../data/config.base.json'] };
+        var cBot = { configs: ['../data/config.one.json'] };
 
         injectConfig(cBot).then(function (config) {
             expect(config.get('logger').colors.silly).to.equal('pink');
@@ -83,7 +83,7 @@ describe('lib | inject', function () {
     it('Should show non-overridden default values are still present', function (done) {
         var injectConfig = bot.get(inject, 'injectConfig');
 
-        var cBot = { configs: ['../data/config.base.json'] };
+        var cBot = { configs: ['../data/config.one.json'] };
 
         injectConfig(cBot).then(function (config) {
             expect(config.get('logger').colors.debug).to.equal('cyan');

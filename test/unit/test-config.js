@@ -10,6 +10,10 @@ describe('lib | config', function () {
         config = bot.expose('../../lib/config');
     });
 
+    afterEach(function () {
+        bot.flush();
+    });
+
     it('setSources | Should throw when configs property is not an array', function () {
         var setSources = bot.get(config, 'setSources');
         expect(setSources.bind(null, 'ugh')).to.throw(Error);
@@ -29,5 +33,40 @@ describe('lib | config', function () {
         expect(_config.logger.colors.silly).to.equal('magenta');
     });
 
+    it('merge | Should return config service with defaults if no external configs exist', function (done) {
+        var inject = bot.expose('../../lib/inject');
+        var injectConfig = bot.get(inject, 'injectConfig');
+        var merge = bot.get(config, 'merge');
+
+        injectConfig()
+            .then(function () {
+                return merge();
+            })
+            .then(function (configService) {
+                expect(configService.get('logger').colors.info).to.equal('green');
+                done();
+            })
+            .catch(done);
+    });
+
+    it('merge | Should layer configs so configs[n+1] overrides configs[n]', function (done) {
+        var inject = bot.expose('../../lib/inject');
+        var injectConfig = bot.get(inject, 'injectConfig');
+        var merge = bot.get(config, 'merge');
+
+        var cBot = {
+            configs: ['../data/config.one.json', '../data/config.two.json']
+        };
+
+        injectConfig(cBot)
+            .then(function () {
+                return merge(cBot);
+            })
+            .then(function (configService) {
+                expect(configService.get('logger').colors.silly).to.equal('orange');
+                done();
+            })
+            .catch(done);
+    });
 });
 
