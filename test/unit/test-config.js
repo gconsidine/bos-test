@@ -55,7 +55,7 @@ describe('lib | config', function () {
         var merge = bot.get(config, 'merge');
 
         var cBot = {
-            configs: ['../data/config.one.json', '../data/config.two.json']
+            configs: [__dirname + '/../data/config.one.json', __dirname + '/../data/config.two.json']
         };
 
         injectConfig(cBot)
