@@ -69,6 +69,7 @@ module.exports = {
 **test-my-service.js**
 ```
 var bot = require('bot'),
+    expect = bot.expect,
     botConfig = require('./bot.config');
 
 describe('Example', function () {
