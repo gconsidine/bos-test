@@ -95,14 +95,14 @@ describe('lib | inject', function () {
         });
     });
 
-    it('loadExternalServices | Should return serviceLoader if includeByPath is not valid', function () {
-        var loadExternalServices = bot.get(inject, 'loadExternalServices');
+    it('loadAppServices | Should return serviceLoader if includeByPath is not valid', function () {
+        var loadAppServices = bot.get(inject, 'loadAppServices');
         var serviceLoader = { sample: 'true' };
 
-        expect(loadExternalServices({}, serviceLoader)).to.equal(serviceLoader);
+        expect(loadAppServices({}, serviceLoader)).to.equal(serviceLoader);
     });
 
-    it('loadExternalServices | Should load services from includeByPath', function () {
+    it('loadAppServices | Should load services from includeByPath', function () {
         var prep = bot.get(inject, 'prep');
         var cBot = { includeByPath: [__dirname + '/../data/services'] };
 
@@ -113,32 +113,24 @@ describe('lib | inject', function () {
         expect(fake.echo('so fake')).to.equal('so fake');
     });
 
-    it('injectExternalServices | Should inject and init dependencies from init signature', function () {
+    it('injectAppServices | Should inject and init dependencies from init signature', function () {
         var prep = bot.get(inject, 'prep');
-        var injectExternalServices = bot.get(inject, 'injectExternalServices');
+        var injectAppServices = bot.get(inject, 'injectAppServices');
         var cBot = { includeByPath: [__dirname + '/../data/services'] };
 
         prep(cBot);
 
-        injectExternalServices('fake-one', cBot).then(function (service) {
+        injectAppServices('fake-one', cBot).then(function (service) {
             expect(service['fake-one'].echo('so fake')).to.equal('so fake');
         });
     });
 
-    it('inject | Should yield config, native, and included services', function (done) {
+    it('inject | Should yield service with its init\'d dependencies', function (done) {
         var cBot = { includeByPath: [__dirname + '/../data/services'] };
 
         bot.inject('fake-one', cBot).then(function (bos) {
             expect(bos.config).to.be.defined;
             expect(bos.logger).to.be.defined;
-            expect(bos.auth).to.be.defined;
-            expect(bos.cache).to.be.defined;
-            expect(bos.middleware).to.be.defined;
-            expect(bos.monitor).to.be.defined;
-            expect(bos.redis).to.be.defined;
-            expect(bos.stats).to.be.defined;
-            expect(bos.swagger).to.be.defined;
-            expect(bos.system).to.be.defined;
             expect(bos['fake-one']).to.be.defined;
 
             done();
