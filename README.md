@@ -73,7 +73,7 @@ var bot = require('bot'),
     botConfig = require('./bot.config');
 
 describe('Example', function () {
-    it('Should yield an object containing my-service and its injected dependencies', function (done) {
+    it('Should yield my-service and its dependencies', function (done) {
 
         bot.inject('my-service', botConfig).then(function (bos) {
             expect(bos.config).to.be.defined;
@@ -90,18 +90,38 @@ describe('Example', function () {
 
 ### API
 
-  * `inject`
+  * `inject(serviceName [, botConfig [, overrideConfig]])`
+     
+    Inject a service and all its dependencies
+     
   * `flush`
-  * `expose`
-  * `get`
-  * `set`
+
+    Flush globally loaded services
+
+  * `expose(pathToModule)`
+
+    Requires and rewires a module to access private properties
+
+  * `get(exposedModule, privateProperty`
+
+    Returns a private property within a given rewired module
+
+  * `set(exposedModule, privateProperty, value)`
+
+    Assign a value to a private property of an exposed module
+
+
+**Unaltered Chai interfaces**
+
   * `expect`
   * `should`
   * `assert`
+
+**Unaltered Sinon interfaces**
+
   * `spy`
   * `stub`
   * `mock`
-  * `_`
 
 ### Planned features
 
