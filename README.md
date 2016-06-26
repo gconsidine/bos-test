@@ -1,30 +1,30 @@
 ![BlueOak Logo](https://github.com/BlueOakJS/blueoak-server/wiki/images/blueoak.png)
 
-A BlueOak Server project to help simplify your tests.
-
 [![Build Status](https://travis-ci.org/gconsidine/bos-test.svg?branch=master)](https://travis-ci.org/gconsidine/bos-test)
 [![Coverage Status](https://coveralls.io/repos/github/gconsidine/bos-test/badge.svg?branch=master)](https://coveralls.io/github/gconsidine/bos-test?branch=master)
 [![Dependency Status](https://david-dm.org/gconsidine/bos-test.svg)](https://david-dm.org/gconsidine/bos-test)
 [![Dev Dependency Status](https://david-dm.org/gconsidine/bos-test/dev-status.svg)](https://david-dm.org/gconsidine/bos-test#info=devDependencies)
 
-### Overview
+A BlueOak Server project to help simplify your tests.
+
+## Overview
 
 **bo**s-**t**est (**bot**). Use **bot** to inject and configure your dependencies with a single call.
 
-#### Installation
+### Installation
 
 `npm i -g bos-test`
 
-#### Configuration
+### Configuration
 
 Configure how **bot** should run in a `bot.config.js` file or create config objects in your tests.
 
 
 ```
 module.exports = {
-  includeByPath: [__dirname + '/services'],
-  configs: [__dirname + '/config.one.json', __dirname + '/config.two.json'],
-  logging: false
+    includeByPath: [__dirname + '/services'],
+    configs: [__dirname + '/config.one.json', __dirname + '/config.two.json'],
+    logging: false
 };
 ```
 
@@ -43,7 +43,7 @@ Note:
 
   * Only absolute paths are supported in **bot** config objects
 
-#### Usage
+### Usage
 
 
 **my-service.js**
@@ -53,8 +53,7 @@ var logger;
 
 function init(_config_, _logger_) {
     logger = _logger_;      
-
-    logger.info('I\'m a useless service');
+    logger.info('I am a useless service');
 }
 
 function echo(msg) {
@@ -70,24 +69,25 @@ module.exports = {
 **test-my-service.js**
 ```
 var bot = require('bot'),
-    botConfig = { includeByPath: [__dirname + '/../services/'] };
+    botConfig = require('./bot.config');
 
-describe('example usage', function () {
+describe('Example', function () {
+    it('Should yield an object containing my-service and its injected dependencies', function (done) {
 
-  it(' | Should yield an object containing my-service and its injected dependencies', function (done) {
-    bot.inject('my-service', botConfig).then(function (bos) {
-      expect(bos.config).to.be.defined;
-      expect(bos.logger).to.be.defined;
-      expect(bos['my-service']).to.be.defined;
+        bot.inject('my-service', botConfig).then(function (bos) {
+            expect(bos.config).to.be.defined;
+            expect(bos.logger).to.be.defined;
+            expect(bos['my-service']).to.be.defined;
 
-      done();
-    }).catch(done);
-  });
+            expect(bos['my-service'].echo('hi')).to.equal('hi');
+
+            done();
+        }).catch(done);
+    });
 });
-
 ```
 
-#### API
+### API
 
   * `inject`
   * `flush`
@@ -102,7 +102,7 @@ describe('example usage', function () {
   * `mock`
   * `_`
 
-#### Planned features
+### Planned features
 
   * Optional and automatic spies for service methods
   * Optional and automatic stubbing of service methods
