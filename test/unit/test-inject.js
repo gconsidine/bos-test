@@ -22,24 +22,16 @@ describe('lib | inject', function () {
         expect(prep(cBot)).to.equal(cBot);
     });
 
-    it('injectNativeSerivces | Should inject core BlueOak services', function (done) {
-        var injectNativeServices = bot.get(inject, 'injectNativeServices');
+    it('inject | Should yield service with its init\'d dependencies', function (done) {
+        var cBot = { includeByPath: [__dirname + '/../data/services'] };
 
-        injectNativeServices().then(function (bos) {
+        bot.inject('fake-one', cBot).then(function (bos) {
             expect(bos.config).to.be.defined;
             expect(bos.logger).to.be.defined;
-            expect(bos.auth).to.be.defined;
-            expect(bos.cache).to.be.defined;
-            expect(bos.middleware).to.be.defined;
-            expect(bos.monitor).to.be.defined;
-            expect(bos.redis).to.be.defined;
-            expect(bos.stats).to.be.defined;
-            expect(bos.swagger).to.be.defined;
-            expect(bos.system).to.be.defined;
+            expect(bos['fake-one']).to.be.defined;
 
             done();
-        })
-        .catch(done);
+        }).catch(done);
     });
 
     it('injectConfig | Should load the native config services', function (done) {
@@ -95,6 +87,56 @@ describe('lib | inject', function () {
         });
     });
 
+    it('injectNativeSerivces | Should inject core BlueOak services', function (done) {
+        var injectNativeServices = bot.get(inject, 'injectNativeServices');
+
+        injectNativeServices().then(function (bos) {
+            expect(bos.config).to.be.defined;
+            expect(bos.logger).to.be.defined;
+            expect(bos.auth).to.be.defined;
+            expect(bos.cache).to.be.defined;
+            expect(bos.middleware).to.be.defined;
+            expect(bos.monitor).to.be.defined;
+            expect(bos.redis).to.be.defined;
+            expect(bos.stats).to.be.defined;
+            expect(bos.swagger).to.be.defined;
+            expect(bos.system).to.be.defined;
+
+            done();
+        })
+        .catch(done);
+    });
+
+    it('injectNativeServices | Should reject if serviceLoader fails', function (done) {
+        var injectNativeServices = bot.get(inject, 'injectNativeServices'),
+            prep = bot.get(inject, 'prep');
+
+        prep();
+
+        var serviceLoader = bot.get(inject, 'serviceLoader');
+        serviceLoader.init = function (a, callback) { callback(new Error('serviceLoader failure')); };
+
+        injectNativeServices().then(function () {
+            expect.toFail();
+            done();
+        }).catch(function (error) {
+            expect(error).to.be.an.Error;
+            done();
+        });
+    });
+
+    it('injectAppServices | Should inject and init dependencies from init signature', function () {
+        var prep = bot.get(inject, 'prep');
+        var injectAppServices = bot.get(inject, 'injectAppServices');
+        var cBot = { includeByPath: [__dirname + '/../data/services'] };
+
+        prep(cBot);
+
+        injectAppServices('fake-one', cBot).then(function (service) {
+            expect(service['fake-one'].echo('so fake')).to.equal('so fake');
+        });
+    });
+
     it('loadAppServices | Should return serviceLoader if includeByPath is not valid', function () {
         var loadAppServices = bot.get(inject, 'loadAppServices');
         var serviceLoader = { sample: 'true' };
@@ -113,28 +155,21 @@ describe('lib | inject', function () {
         expect(fake.echo('so fake')).to.equal('so fake');
     });
 
-    it('injectAppServices | Should inject and init dependencies from init signature', function () {
-        var prep = bot.get(inject, 'prep');
-        var injectAppServices = bot.get(inject, 'injectAppServices');
-        var cBot = { includeByPath: [__dirname + '/../data/services'] };
+    it('loadAppServices | Should reject if serviceLoader fails', function (done) {
+        var injectAppServices = bot.get(inject, 'injectAppServices'),
+            prep = bot.get(inject, 'prep');
 
-        prep(cBot);
+        prep();
 
-        injectAppServices('fake-one', cBot).then(function (service) {
-            expect(service['fake-one'].echo('so fake')).to.equal('so fake');
+        var serviceLoader = bot.get(inject, 'serviceLoader');
+        serviceLoader.init = function (a, callback) { callback(new Error('serviceLoader failure')); };
+
+        injectAppServices().then(function () {
+            expect.toFail();
+            done();
+        }).catch(function (error) {
+            expect(error).to.be.an.Error;
+            done();
         });
     });
-
-    it('inject | Should yield service with its init\'d dependencies', function (done) {
-        var cBot = { includeByPath: [__dirname + '/../data/services'] };
-
-        bot.inject('fake-one', cBot).then(function (bos) {
-            expect(bos.config).to.be.defined;
-            expect(bos.logger).to.be.defined;
-            expect(bos['fake-one']).to.be.defined;
-
-            done();
-        }).catch(done);
-    });
 });
-
