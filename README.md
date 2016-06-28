@@ -28,10 +28,10 @@ module.exports = {
 };
 ```
 
-**includeByPath** `Array` of `String`s - The path to any folder containing BlueOak services that are used in your tests
+**includeByPath** `Array` - The path to any folder containing BlueOak services that are used in your tests
 
 
-**config** `Array` of `String` - Paths to any configuration files that you\'d like to overlay on top of BlueOak's 
+**config** `Array` - Paths to any configuration files that you\'d like to overlay on top of BlueOak's 
 default configuration. The configuration file at `[n + 1]` always has precedence over `[n]`. If a config object 
 is created in code and explicitly passed into the `inject` call, it will be applied on top of any config defined 
 in file.
@@ -68,24 +68,24 @@ module.exports = {
 
 **test-my-service.js**
 ```
-var bot = require('bot'),
+var bot = require('bos-test'),
     expect = bot.expect,
     botConfig = require('./bot.config');
 
-describe('Example', function () {
-    it('Should yield my-service and its dependencies', function (done) {
+ ...
 
-        bot.inject('my-service', botConfig).then(function (bos) {
-            expect(bos.config).to.be.defined;
-            expect(bos.logger).to.be.defined;
-            expect(bos['my-service']).to.be.defined;
+bot.inject('my-service', botConfig).then(function (bos) {
+    expect(bos.config).to.be.defined;
+    expect(bos.logger).to.be.defined;
+    expect(bos['my-service']).to.be.defined;
 
-            expect(bos['my-service'].echo('hi')).to.equal('hi');
+    expect(bos['my-service'].echo('hi')).to.equal('hi');
 
-            done();
-        }).catch(done);
-    });
-});
+    done();
+}).catch(done);
+
+ ...
+
 ```
 
 ### API
